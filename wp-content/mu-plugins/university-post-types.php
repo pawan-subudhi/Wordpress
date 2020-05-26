@@ -50,5 +50,24 @@
             ),
             'menu_icon' => 'dashicons-welcome-learn-more'
         ));
+
+        //Campus Post Type
+        register_post_type('campus', array(
+            'supports' => array('title', 'editor', 'excerpt'),
+            'rewrite' => array(
+                'slug' => 'campuses'
+            ),
+            'has_archive' => true,//so it could support archive mode
+            'public' => true, //this make sthe post type visible to editors and viewers over the website               
+            'labels' => array(
+                'name' => 'Campuses',//gives name in the dasboard events like any other sections
+                'add_new_item' => 'Add New Campus',//when clicked onto the events it will show at the top add new eventin this scene
+                'edit_item' => 'Edit Campus',
+                'all_items' => 'All Campuses',//whenever we hiver on the event ssection it will show this 
+                'singular_name' => 'Campus',//name for one object of this post type
+            ),
+            'menu_icon' => 'dashicons-location-alt'
+        ));
+        
     }
     add_action('init','university_post_types');
