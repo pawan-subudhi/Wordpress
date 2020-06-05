@@ -54,6 +54,7 @@
         //Campus Post Type
         register_post_type('campus', array(
             'supports' => array('title', 'editor', 'excerpt'),
+            // archive URL
             'rewrite' => array(
                 'slug' => 'campuses'
             ),

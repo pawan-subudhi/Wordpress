@@ -3,6 +3,12 @@ wp-admin/
 /*.php
 /*.txt
 /*.html
+/*.js
+/*.txt
 
 wp-content/plugins/
 wp-content/uploads/
+
+node_modules
+
+package-lock.json
