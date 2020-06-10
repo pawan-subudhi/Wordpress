@@ -1,4 +1,18 @@
 <?php
+
+require get_theme_file_path('/inc/search-route.php');
+
+//to add a custom field to the raw json data that wp sends back to us while rest api we call for live search i.e add author name to the posts data we fetch
+function university_custom_rest(){
+  //takes 3 args. 1st is the post type we wan to cutomize, 2nd is the name to field u want to add, 3rd is array how we want to manage this field
+  //here the return value of get_callback is assigned to the authorName
+  register_rest_field('post', 'authorName', array(
+    'get_callback' => function(){return get_the_author();}  
+  ));
+}
+//takes 2 args. 1st is wp event we want to hook onto and 2nd is the func we want to call during this event hook
+add_action('rest_api_init','university_custom_rest');
+
 function pageBanner($args = NULL) {
   //php logic
   if (!$args['title']) {
@@ -30,12 +44,19 @@ function pageBanner($args = NULL) {
 <?php }
 
 function university_files() {
-    // alias name, file path, this script/file is dependednt on any other script, version number can give any or to avoid caching use a little trick of microtime which gives uniques value evrytime loaded, do u want to load this file right before the closing body tag
+  // alias name, file path, this script/file is dependednt on any other script, version number can give any or to avoid caching use a little trick of microtime which gives uniques value evrytime loaded, do u want to load this file right before the closing body tag
   wp_enqueue_script('main-university-js', get_theme_file_uri('/js/scripts-bundled.js'), NULL, microtime(), true);
   wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
   wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
   wp_enqueue_style('university_main_styles', get_stylesheet_uri(), NULL, microtime());
+
+  //take 3 args for 1st include name/handle js file which u want to make flexible
+  //2nd arg is make u a variable name
+  //3rd is array of data we want to make it available in js file
+  wp_localize_script('main-university-js','universityData',array(
+    'root_url' => get_site_url()
+  ));
 }
 
 add_action('wp_enqueue_scripts', 'university_files');
@@ -81,10 +102,3 @@ function university_adjust_queries($query) {
 }
 
 add_action('pre_get_posts', 'university_adjust_queries');
-
-//if you are not working on localhost then u need to pass the api key value to the application
-// function universityMapKey($api){
-//   $api['key'] = 'AIzaSyAA2Pb9G1mVWhAuV-4L4S5uqUyx8LfCoCk';
-//   return $api;
-// }
-// add_filter('acf/fields/google_map/api', 'universityMapKey');

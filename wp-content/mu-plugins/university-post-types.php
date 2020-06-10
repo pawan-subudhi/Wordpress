@@ -39,6 +39,7 @@
 
         //Professor Post Type
         register_post_type('professor', array(
+            'show_in_rest' =>true,//to enable raw json data for custom post types created we need to make this field true
             'supports' => array('title', 'editor','thumbnail'),
             'public' => true, //this make sthe post type visible to editors and viewers over the website               
             'labels' => array(
