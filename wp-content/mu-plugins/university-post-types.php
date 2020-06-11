@@ -3,6 +3,8 @@
     //Event Post Type
     function university_post_types(){
         register_post_type('event', array(
+            'capability_type' => 'event',
+            'map_meta_cap' => true,
             'supports' => array('title', 'editor', 'excerpt'),
             'rewrite' => array(
                 'slug' => 'events'
@@ -21,7 +23,7 @@
 
         //Program Post Type
         register_post_type('program', array(
-            'supports' => array('title', 'editor'),
+            'supports' => array('title'),
             'rewrite' => array(
                 'slug' => 'programs'
             ),
@@ -54,6 +56,8 @@
 
         //Campus Post Type
         register_post_type('campus', array(
+            'capability_type' => 'campus',
+            'map_meta_cap' => true,
             'supports' => array('title', 'editor', 'excerpt'),
             // archive URL
             'rewrite' => array(
@@ -69,6 +73,22 @@
                 'singular_name' => 'Campus',//name for one object of this post type
             ),
             'menu_icon' => 'dashicons-location-alt'
+        ));
+
+        //Note Post Type
+        register_post_type('note', array(
+            'show_in_rest' => true,//to enable raw json data for custom post types created we need to make this field true
+            'supports' => array('title', 'editor'),
+            'public' => false, //because we want notes to be private and sepecific to each user account not want our note to display in our public query or in search results and this false will hide it from admin dashboard
+            'show_ui' => true,//this will enable the post type show in dashboard
+            'labels' => array(
+                'name' => 'Notes',//gives name in the dasboard events like any other sections
+                'add_new_item' => 'Add New Note',//when clicked onto the events it will show at the top add new eventin this scene
+                'edit_item' => 'Edit Note',
+                'all_items' => 'All Notes',//whenever we hiver on the event ssection it will show this 
+                'singular_name' => 'Note',//name for one object of this post type
+            ),
+            'menu_icon' => 'dashicons-welcome-write-blog'
         ));
         
     }

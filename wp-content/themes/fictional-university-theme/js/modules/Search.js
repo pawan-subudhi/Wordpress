@@ -112,6 +112,7 @@ class Search{
         this.searchField.val('');
         setTimeout(()=>this.searchField.focus(), 301);
         this.isOverlayOpen = true;
+        return false;//this will disable the default behaviour of a tag or link elements
     }
 
     closeOverlay(){
@@ -122,7 +123,6 @@ class Search{
 
     addSearchHTML(){
         $("body").append(`
-            // by default  search-overlay is hidden if we add another class  search-overlay--active it shows up 
             <div class="search-overlay">
                 <div class="search-overlay__top">
                     <div class="container">
