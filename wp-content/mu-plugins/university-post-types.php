@@ -77,7 +77,9 @@
 
         //Note Post Type
         register_post_type('note', array(
-            'show_in_rest' => true,//to enable raw json data for custom post types created we need to make this field true
+            'capability_type' => 'note',
+            'map_meta_cap' => true,
+            'show_in_rest' => true,//to enable raw json data for custom post types created we need to make this field true. It enables the built-in rest api end points
             'supports' => array('title', 'editor'),
             'public' => false, //because we want notes to be private and sepecific to each user account not want our note to display in our public query or in search results and this false will hide it from admin dashboard
             'show_ui' => true,//this will enable the post type show in dashboard
@@ -89,6 +91,21 @@
                 'singular_name' => 'Note',//name for one object of this post type
             ),
             'menu_icon' => 'dashicons-welcome-write-blog'
+        ));
+
+        //Like Post Type
+        register_post_type('like', array(
+            'supports' => array('title'),
+            'public' => false, //because we want notes to be private and sepecific to each user account not want our note to display in our public query or in search results and this false will hide it from admin dashboard
+            'show_ui' => true,//this will enable the post type show in dashboard
+            'labels' => array(
+                'name' => 'Likes',//gives name in the dasboard events like any other sections
+                'add_new_item' => 'Add New Like',//when clicked onto the events it will show at the top add new eventin this scene
+                'edit_item' => 'Edit Like',
+                'all_items' => 'All Likes',//whenever we hiver on the event ssection it will show this 
+                'singular_name' => 'Like',//name for one object of this post type
+            ),
+            'menu_icon' => 'dashicons-heart'
         ));
         
     }
