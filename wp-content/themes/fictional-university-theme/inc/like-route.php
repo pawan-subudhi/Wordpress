@@ -50,6 +50,12 @@ function createLike($data){
     }
 }
 
-function deleteLike(){
-    return 'Thanks for trying to delete a like';
+function deleteLike($data){
+    $likeId = sanitize_text_field( $data['like'] );
+    if(get_current_user_id() == get_post_field('post_author', $likeId) AND get_post_type($likeId) == 'like') {
+        wp_delete_post($likeId, true);//takes 2 args .. 1st is the id and 2nd is wether we want to move it to the trash or skip the trash and completely delete. if true then we are trying to skip the trash
+        return"Congrats, like deleted.";
+    } else {
+        die("You do not have the permission to delete that.");
+    }
 }
